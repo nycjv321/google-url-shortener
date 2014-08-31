@@ -29,6 +29,10 @@ public class GoogleURLShortener {
      * @return a goo.gl version of the given url
      */
     public static String getShortenedURL(String url) {
+        if (url.startsWith("http://goo.gl")) {
+            logger.warn("Invalid URL provided!");
+            return "";
+        }
         String output = post(GOOGLE_URL_SHORTENER,
                 getLongURLStringEntity(url),
                 HttpUtilities.createHeader("Content-Type", "application/json")
@@ -43,6 +47,10 @@ public class GoogleURLShortener {
      * @return an unshorted url
      */
     public static String getExpandedURL(String id) {
+        if (!id.startsWith("http://goo.gl")) {
+            logger.warn("Invalid URL provided!");
+            return "";
+        }
         URI uri = createURI(GOOGLE_URL_SHORTENER + "?shortUrl=" + id);
         String output = get(uri);
 

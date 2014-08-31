@@ -15,8 +15,17 @@ public class GoogleURLShortenerTests {
     }
 
     @Test
+    public void testInvalidShortenURL() {
+        assertEquals(GoogleURLShortener.getShortenedURL("http://goo.gl/CRwF"), "");
+    }
+
+    @Test
     public void testExpandURL() {
         assertEquals(GoogleURLShortener.getExpandedURL("http://goo.gl/fbsS"), "http://www.google.com/");
     }
 
+    @Test
+    public void tesInvalidExpandURL() {
+        assertEquals(GoogleURLShortener.getExpandedURL("http://www.google.com"), "");
+    }
 }
