@@ -1,6 +1,5 @@
 package utilities.nycjv321.googleurlshortener;
 
-import googleurlshortener.GoogleURLShortener;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
