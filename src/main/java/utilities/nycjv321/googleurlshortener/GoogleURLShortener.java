@@ -24,14 +24,30 @@ public class GoogleURLShortener {
     private static final Logger logger = LogManager.getLogger(GoogleURLShortener.class
             .getName());
 
+    /**
+     * This class is meant to not be instantiated so its constructor is marked as private
+     */
     private GoogleURLShortener() {}
 
+    /**
+     * Takes a URL and returns its goo.gl version.
+     * @param url a regular url
+     * @return a goo.gl version of the given url
+     */
     public static String getShortenedURL(String url) {
-        String output = post(GOOGLE_URL_SHORTENER, getLongURLStringEntity(url), HttpUtilities.createHeader("Content-Type", "application/json"));
+        String output = post(GOOGLE_URL_SHORTENER,
+                getLongURLStringEntity(url),
+                HttpUtilities.createHeader("Content-Type", "application/json")
+        );
         JSONObject jsonobject = new JSONObject(output);
         return jsonobject.getString("id");
     }
 
+    /**
+     * Takes a shortened goo.gl link and returns its uncompressed url
+     * @param id a goo.gl url
+     * @return an unshorted url
+     */
     public static String getExpandedURL(String id) {
         URI uri = createURI(GOOGLE_URL_SHORTENER + "?shortUrl=" + id);
         String output = get(uri);
@@ -40,6 +56,11 @@ public class GoogleURLShortener {
         return jsonobject.getString("longUrl");
     }
 
+    /**
+     * Create a string entity representing the "longUrl" post parameter
+     * @param longURL a string that represents the uncompressed long url.
+     * @return
+     */
     private static StringEntity getLongURLStringEntity(String longURL) {
         try {
             return new StringEntity("{\"longUrl\": \""+longURL+"/\"}");
