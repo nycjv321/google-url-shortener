@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package utilities.nycjv321.googleurlshortener;
 
 import com.nycjv321.utilities.HttpUtilities;
@@ -10,14 +6,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 
 import static com.nycjv321.utilities.HttpUtilities.*;
 
 /**
- *
- * @author javier
+ * Created by Javier L. Velasquez (nycjv321@gmail.com)
  */
 public class GoogleURLShortener {
     private static final URI GOOGLE_URL_SHORTENER = createURI("https://www.googleapis.com/urlshortener/v1/url");
@@ -62,12 +56,7 @@ public class GoogleURLShortener {
      * @return
      */
     private static StringEntity getLongURLStringEntity(String longURL) {
-        try {
-            return new StringEntity("{\"longUrl\": \""+longURL+"/\"}");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return HttpUtilities.createStringEntity("{\"longUrl\": \"" + longURL + "/\"}");
     }
 
 }
