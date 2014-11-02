@@ -21,10 +21,12 @@ public class GoogleURLShortener {
     /**
      * This class is meant to not be instantiated so its constructor is marked as private
      */
-    private GoogleURLShortener() {}
+    private GoogleURLShortener() {
+    }
 
     /**
      * Takes a URL and returns its goo.gl version.
+     *
      * @param url a regular url
      * @return a goo.gl version of the given url
      */
@@ -43,6 +45,7 @@ public class GoogleURLShortener {
 
     /**
      * Takes a shortened goo.gl link and returns its uncompressed url
+     *
      * @param id a goo.gl url
      * @return an unshorted url
      */
@@ -60,6 +63,7 @@ public class GoogleURLShortener {
 
     /**
      * Create a string entity representing the "longUrl" post parameter
+     *
      * @param longURL a string that represents the uncompressed long url.
      * @return
      */
