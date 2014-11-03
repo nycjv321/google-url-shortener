@@ -21,7 +21,7 @@ import java.net.URL;
  * Created by Javier on 11/1/2014.
  */
 public class GoogleURLShortenerUI extends Application implements FXUtilities {
-    GoogleURLRecordManager recordManager = new GoogleURLRecordManager();
+    GoogleURLShortenerRecordManager recordManager = new GoogleURLShortenerRecordManager();
     private ObservableList<GoogleURLShortenerRecord> data;
 
     public static void main(String[] args) {

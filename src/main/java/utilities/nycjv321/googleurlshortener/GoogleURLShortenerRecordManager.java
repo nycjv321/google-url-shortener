@@ -13,11 +13,11 @@ import java.util.Date;
  * This class represents a Google URL
  * Created by Javier on 11/2/2014.
  */
-public class GoogleURLRecordManager {
+public class GoogleURLShortenerRecordManager {
     private Connection connection;
-    private static final Logger logger = LogManager.getLogger(GoogleURLRecordManager.class);
+    private static final Logger logger = LogManager.getLogger(GoogleURLShortenerRecordManager.class);
 
-    public GoogleURLRecordManager() {
+    public GoogleURLShortenerRecordManager() {
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/records.db");
