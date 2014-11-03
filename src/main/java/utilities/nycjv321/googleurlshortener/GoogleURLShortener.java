@@ -6,7 +6,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 
 import static com.nycjv321.utilities.HttpUtilities.*;
 
@@ -30,17 +32,21 @@ public class GoogleURLShortener {
      * @param url a regular url
      * @return a goo.gl version of the given url
      */
-    public static String getShortenedURL(String url) {
+    public static URL getShortenedURL(String url) {
         if (url.startsWith("http://goo.gl")) {
             logger.warn("Invalid URL provided!");
-            return "";
+            return null;
         }
         String output = post(GOOGLE_URL_SHORTENER,
                 getLongURLStringEntity(url),
                 HttpUtilities.createHeader("Content-Type", "application/json")
         );
         JSONObject jsonobject = new JSONObject(output);
-        return jsonobject.getString("id");
+        try {
+            return new URL(jsonobject.getString("id"));
+        } catch (MalformedURLException e) {
+            return null;
+        }
     }
 
     /**
@@ -49,16 +55,20 @@ public class GoogleURLShortener {
      * @param id a goo.gl url
      * @return an unshorted url
      */
-    public static String getExpandedURL(String id) {
+    public static URL getExpandedURL(String id) {
         if (!id.startsWith("http://goo.gl")) {
             logger.warn("Invalid URL provided!");
-            return "";
+            return null;
         }
         URI uri = createURI(GOOGLE_URL_SHORTENER + "?shortUrl=" + id);
         String output = get(uri);
 
         JSONObject jsonobject = new JSONObject(output);
-        return jsonobject.getString("longUrl");
+        try {
+            return new URL(jsonobject.getString("longUrl"));
+        } catch (MalformedURLException e) {
+            return null;
+        }
     }
 
     /**

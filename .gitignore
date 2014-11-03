@@ -2,3 +2,4 @@
 .idea/libraries/*
 target
 *.iml
+src/main/resources/*.db
