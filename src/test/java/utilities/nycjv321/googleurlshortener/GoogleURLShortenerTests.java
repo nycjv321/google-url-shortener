@@ -1,34 +1,48 @@
 package utilities.nycjv321.googleurlshortener;
 
+import com.google.common.base.Strings;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import utilities.nycjv321.googleurlshortener.exceptions.InvalidUrlException;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 
 /**
  * Created by Javier on 8/31/2014.
  */
 public class GoogleURLShortenerTests {
 
-    @Test
-    public void testShortenURL() throws MalformedURLException {
-        assertEquals(GoogleURLShortener.getShortenedURL("http://www.google.com/"), new URL("http://goo.gl/CRwF"));
+    private GoogleURLShortener googleUrlShortener;
+
+    @BeforeClass
+    public void beforeClass() {
+        googleUrlShortener = new GoogleURLShortener();
+        String apiKey = TestPropertiesReader.getApiKey();
+        assertFalse(Strings.isNullOrEmpty(apiKey));
+        googleUrlShortener.setApiKey(apiKey);
     }
 
     @Test
+    public void testShortenURL() throws MalformedURLException {
+        assertEquals(googleUrlShortener.getShortenedURL("http://www.google.com/"), new URL("http://goo.gl/CRwF"));
+    }
+
+    @Test(expectedExceptions = InvalidUrlException.class)
     public void testInvalidShortenURL() {
-        assertEquals(GoogleURLShortener.getShortenedURL("http://goo.gl/CRwF"), null);
+        assertEquals(googleUrlShortener.getShortenedURL("http://goo.gl/CRwF"), null);
     }
 
     @Test
     public void testExpandURL() throws MalformedURLException {
-        assertEquals(GoogleURLShortener.getExpandedURL("http://goo.gl/fbsS"), new URL("http://www.google.com/"));
+        assertEquals(googleUrlShortener.getExpandedURL("http://goo.gl/fbsS"), new URL("http://www.google.com/"));
     }
 
-    @Test
+    @Test(expectedExceptions = InvalidUrlException.class)
     public void tesInvalidExpandURL() {
-        assertEquals(GoogleURLShortener.getExpandedURL("http://www.google.com"), null);
+        assertEquals(googleUrlShortener.getExpandedURL("http://www.google.com"), null);
     }
 }
